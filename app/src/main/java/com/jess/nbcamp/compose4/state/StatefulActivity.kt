@@ -20,19 +20,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-class StateActivity : ComponentActivity() {
+class StatefulActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            StateScreen()
+            StatefulScreen()
         }
     }
 }
 
 @Composable
-private fun StateScreen(
+private fun StatefulScreen(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(

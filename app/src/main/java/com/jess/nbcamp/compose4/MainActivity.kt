@@ -18,7 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jess.nbcamp.compose4.mvvm.MvvmViewModel
 import com.jess.nbcamp.compose4.state.HoistingActivity
-import com.jess.nbcamp.compose4.state.StateActivity
+import com.jess.nbcamp.compose4.state.StatefulActivity
+import com.jess.nbcamp.compose4.state.StatelessActivity
 import com.jess.nbcamp.compose4.ui.theme.NbCmapTheme
 
 class MainActivity : ComponentActivity() {
@@ -57,7 +58,7 @@ fun Greeting(
                 context.startActivity(
                     Intent(
                         context,
-                        StateActivity::class.java
+                        StatefulActivity::class.java
                     )
                 )
             },
@@ -76,6 +77,19 @@ fun Greeting(
             },
         ) {
             Text(text = "HoistingActivity")
+        }
+
+        Button(
+            onClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        StatelessActivity::class.java
+                    )
+                )
+            },
+        ) {
+            Text(text = "StatelessActivity")
         }
     }
 }

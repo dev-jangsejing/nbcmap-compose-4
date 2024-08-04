@@ -15,7 +15,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.NbCampTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +23,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".state.StateActivity" />
+        <activity android:name=".state.StatefulActivity" />
         <activity android:name=".state.HoistingActivity" />
+        <activity android:name=".state.StatelessActivity" />
     </application>
 
 </manifest>
