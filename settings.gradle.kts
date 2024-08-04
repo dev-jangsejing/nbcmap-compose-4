@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "nbcmap-compose-4"
+rootProject.name = "nbcamp-compose-4"
 include(":app")
  

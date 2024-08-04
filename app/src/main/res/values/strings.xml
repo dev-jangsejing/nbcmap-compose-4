@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">nbcmap-compose-4</string>
+    <string name="app_name">nbcamp-compose-4</string>
+
+    <string name="sign_in_id">아이디</string>
+    <string name="sign_in_password">비밀번호</string>
+    <string name="sign_in_login_in">로그인</string>
+    <string name="sign_in_sign_up">회원가입</string>
+
+    <string name="sign_up_name">이름</string>
+    <string name="sign_up_id">아이디</string>
+    <string name="sign_up_password">비밀번호</string>
+    <string name="sign_up_confirm">회원가입</string>
 </resources>

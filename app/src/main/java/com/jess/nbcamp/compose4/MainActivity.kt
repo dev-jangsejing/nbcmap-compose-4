@@ -20,7 +20,8 @@ import com.jess.nbcamp.compose4.mvvm.MvvmViewModel
 import com.jess.nbcamp.compose4.state.HoistingActivity
 import com.jess.nbcamp.compose4.state.StatefulActivity
 import com.jess.nbcamp.compose4.state.StatelessActivity
-import com.jess.nbcamp.compose4.ui.theme.NbCmapTheme
+import com.jess.nbcamp.compose4.ui.theme.NbCampTheme
+import com.jess.nbcamp.compose4.user.signin.SignInActivity
 
 class MainActivity : ComponentActivity() {
 
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NbCmapTheme {
+            NbCampTheme {
                 Scaffold(
                     modifier = Modifier
                         .fillMaxSize()
@@ -90,6 +91,19 @@ fun Greeting(
             },
         ) {
             Text(text = "StatelessActivity")
+        }
+
+        Button(
+            onClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        SignInActivity::class.java
+                    )
+                )
+            },
+        ) {
+            Text(text = "SignInActivity")
         }
     }
 }
