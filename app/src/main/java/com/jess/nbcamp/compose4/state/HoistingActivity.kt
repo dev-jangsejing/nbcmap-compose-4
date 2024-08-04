@@ -20,19 +20,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-class StateActivity : ComponentActivity() {
+class HoistingActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            StateScreen()
+            HoistingScreen()
         }
     }
 }
 
+
 @Composable
-private fun StateScreen(
+private fun HoistingScreen(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -40,37 +41,48 @@ private fun StateScreen(
             .fillMaxSize()
             .padding(24.dp),
     ) { innerPadding ->
-        NameTextField(
-            modifier = Modifier.padding(innerPadding)
-        )
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            NameTextLabel()
+        }
     }
 }
 
 @Composable
-private fun NameTextField(
-    modifier: Modifier
-) {
-    Column(
-        modifier = modifier.padding(16.dp),
-    ) {
-        var name by remember { mutableStateOf("") }
-        if (name.isNotEmpty()) {
-            Text(
-                text = "Hello, $name!",
-                modifier = Modifier.padding(bottom = 8.dp),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        }
-
-        OutlinedTextField(
-            value = name,
-            onValueChange = {
-                name = it
-            },
-            modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text("Name")
-            },
+private fun NameTextLabel() {
+    var name by remember { mutableStateOf("") }
+    if (name.isNotEmpty()) {
+        Text(
+            text = "Hello, $name!",
+            modifier = Modifier.padding(bottom = 8.dp),
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
+
+    NameTextField(
+        name = name,
+        onValueChange = {
+            name = it
+        },
+    )
+}
+
+@Composable
+private fun NameTextField(
+    name: String,
+    onValueChange: ((String) -> Unit),
+) {
+    OutlinedTextField(
+        value = name,
+        onValueChange = {
+            onValueChange(it)
+        },
+        modifier = Modifier.fillMaxWidth(),
+        label = {
+            Text("Name")
+        },
+    )
 }

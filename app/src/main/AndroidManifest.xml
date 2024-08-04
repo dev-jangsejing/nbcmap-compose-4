@@ -25,6 +25,7 @@
         </activity>
 
         <activity android:name=".state.StateActivity" />
+        <activity android:name=".state.HoistingActivity" />
     </application>
 
 </manifest>

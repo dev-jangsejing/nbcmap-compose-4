@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jess.nbcamp.compose4.mvvm.MvvmViewModel
+import com.jess.nbcamp.compose4.state.HoistingActivity
 import com.jess.nbcamp.compose4.state.StateActivity
 import com.jess.nbcamp.compose4.ui.theme.NbCmapTheme
 
@@ -61,7 +62,20 @@ fun Greeting(
                 )
             },
         ) {
-            Text(text = "State")
+            Text(text = "StateActivity")
+        }
+
+        Button(
+            onClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        HoistingActivity::class.java
+                    )
+                )
+            },
+        ) {
+            Text(text = "HoistingActivity")
         }
     }
 }
