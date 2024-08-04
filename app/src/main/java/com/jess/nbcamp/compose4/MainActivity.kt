@@ -1,19 +1,24 @@
 package com.jess.nbcamp.compose4
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.jess.nbcamp.compose4.mvvm.MvvmViewModel
-import com.jess.nbcamp.compose4.ui.theme.Nbcmapcompose4Theme
+import com.jess.nbcamp.compose4.state.StateActivity
+import com.jess.nbcamp.compose4.ui.theme.NbCmapTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -23,10 +28,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Nbcmapcompose4Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            NbCmapTheme {
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                ) { innerPadding ->
                     Greeting(
-                        name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -36,17 +44,24 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
+fun Greeting(
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    Column(
         modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Nbcmapcompose4Theme {
-        Greeting("Android")
+    ) {
+        Button(
+            onClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        StateActivity::class.java
+                    )
+                )
+            },
+        ) {
+            Text(text = "State")
+        }
     }
 }
