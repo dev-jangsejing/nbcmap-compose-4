@@ -1,6 +1,9 @@
 package com.jess.nbcamp.compose4.user.signin
 
-import android.content.Intent
+import android.app.Activity
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +20,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,16 +30,69 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.jess.nbcamp.compose4.R
 import com.jess.nbcamp.compose4.user.signup.SignUpActivity
+import com.jess.nbcamp.compose4.user.user.UserActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignInScreen(
-    modifier: Modifier = Modifier
+    viewModel: SignInViewModel,
+    modifier: Modifier = Modifier,
 ) {
 
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // ... data 처리
+        }
+    }
+
+    LaunchedEffect(viewModel.event) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                viewModel.event.collectLatest { event ->
+                    when (event) {
+                        is SignInEvent.NeedInputElement -> {
+                            Toast.makeText(
+                                context,
+                                context.getText(R.string.sign_in_need_input_element),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        is SignInEvent.MoveUserScreen -> {
+                            context.startActivity(
+                                UserActivity.newIntent(context)
+                            )
+                        }
+
+                        is SignInEvent.NotFoundUser -> {
+                            Toast.makeText(
+                                context,
+                                context.getText(R.string.sign_in_not_found_user),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = modifier
@@ -64,14 +122,21 @@ fun SignInScreen(
 
             Input(
                 label = stringResource(id = R.string.sign_in_id),
-                input = ""
+                input = state.id,
+                onValueChange = {
+                    viewModel.onChangedId(it)
+                },
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Input(
                 label = stringResource(id = R.string.sign_in_password),
-                input = ""
+                input = state.password,
+                visualTransformation = PasswordVisualTransformation(),
+                onValueChange = {
+                    viewModel.onChangedPassword(it)
+                },
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -79,14 +144,14 @@ fun SignInScreen(
             ActionButton(
                 text = stringResource(id = R.string.sign_in_login_in),
             ) {
-
+                viewModel.onClickLogin()
             }
 
             ActionButton(
                 text = stringResource(id = R.string.sign_in_sign_up),
             ) {
-                context.startActivity(
-                    Intent(context, SignUpActivity::class.java)
+                launcher.launch(
+                    SignUpActivity.newIntent(context)
                 )
             }
         }
@@ -97,9 +162,10 @@ fun SignInScreen(
 private fun Input(
     label: String,
     input: String,
+    onValueChange: (String) -> Unit,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     modifier: Modifier = Modifier,
 ) {
-
     Column(
         modifier = modifier
             .fillMaxWidth(),
@@ -116,9 +182,8 @@ private fun Input(
             modifier = Modifier
                 .fillMaxWidth(),
             value = input,
-            onValueChange = {
-
-            }
+            visualTransformation = visualTransformation,
+            onValueChange = onValueChange
         )
     }
 }

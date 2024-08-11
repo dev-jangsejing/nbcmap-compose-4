@@ -1,18 +1,16 @@
-package com.jess.nbcamp.compose4.user.signup
+package com.jess.nbcamp.compose4.user.signin
 
-data class SignUpUiState(
-    val name: String,
+data class SignInUiState(
     val id: String,
     val password: String,
 ) {
+
     companion object {
 
         fun empty(
-            name: String = "",
             id: String = "",
             password: String = "",
-        ) = SignUpUiState(
-            name = name,
+        ) = SignInUiState(
             id = id,
             password = password,
         )

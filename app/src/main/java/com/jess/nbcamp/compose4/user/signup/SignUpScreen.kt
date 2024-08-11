@@ -11,12 +11,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,15 +33,41 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.jess.nbcamp.compose4.R
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel,
     modifier: Modifier = Modifier,
-    onConfirm: () -> Unit,
+    onFinishAndResultOk: () -> Unit,
 ) {
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    var isShowDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                viewModel.event.collectLatest { event ->
+                    when (event) {
+                        is SignUpEvent.FinishAndResultOk -> {
+                            onFinishAndResultOk()
+                        }
+
+                        is SignUpEvent.NeedInputElement -> {
+                            isShowDialog = true
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -99,9 +131,20 @@ fun SignUpScreen(
             ActionButton(
                 text = stringResource(id = R.string.sign_up_confirm),
             ) {
-                onConfirm()
+                viewModel.onClickSignUp()
             }
         }
+    }
+
+    if (isShowDialog) {
+        NeedInputElementDialog(
+            onDismissRequest = {
+                isShowDialog = false
+            },
+            onConfirmation = {
+                isShowDialog = false
+            },
+        )
     }
 }
 
@@ -147,4 +190,30 @@ private fun ActionButton(
     ) {
         Text(text = text)
     }
+}
+
+@Composable
+private fun NeedInputElementDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+) {
+    AlertDialog(
+        text = {
+            Text(text = stringResource(id = R.string.sign_up_need_input_element))
+        },
+        onDismissRequest = {
+            onDismissRequest()
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirmation()
+                }
+            ) {
+                Text(
+                    text = stringResource(id = R.string.confirm)
+                )
+            }
+        },
+    )
 }

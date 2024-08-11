@@ -1,13 +1,17 @@
 <resources>
     <string name="app_name">nbcamp-compose-4</string>
+    <string name="confirm">확인</string>
 
     <string name="sign_in_id">아이디</string>
     <string name="sign_in_password">비밀번호</string>
     <string name="sign_in_login_in">로그인</string>
     <string name="sign_in_sign_up">회원가입</string>
+    <string name="sign_in_need_input_element">모든 항목을 입력해주세요!</string>
+    <string name="sign_in_not_found_user">유저를 찾을 수 없습니다!</string>
 
     <string name="sign_up_name">이름</string>
     <string name="sign_up_id">아이디</string>
     <string name="sign_up_password">비밀번호</string>
     <string name="sign_up_confirm">회원가입</string>
+    <string name="sign_up_need_input_element">모든 항목을 입력해주세요!</string>
 </resources>

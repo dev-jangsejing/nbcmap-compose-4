@@ -64,20 +64,7 @@ fun Greeting(
                 )
             },
         ) {
-            Text(text = "StateActivity")
-        }
-
-        Button(
-            onClick = {
-                context.startActivity(
-                    Intent(
-                        context,
-                        HoistingActivity::class.java
-                    )
-                )
-            },
-        ) {
-            Text(text = "HoistingActivity")
+            Text(text = "StatefulActivity")
         }
 
         Button(
@@ -91,6 +78,19 @@ fun Greeting(
             },
         ) {
             Text(text = "StatelessActivity")
+        }
+
+        Button(
+            onClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        HoistingActivity::class.java
+                    )
+                )
+            },
+        ) {
+            Text(text = "HoistingActivity")
         }
 
         Button(
