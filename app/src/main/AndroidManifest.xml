@@ -29,6 +29,7 @@
         <activity android:name=".user.signin.SignInActivity" />
         <activity android:name=".user.signup.SignUpActivity" />
         <activity android:name=".user.user.UserActivity" />
+        <activity android:name=".market.presentation.home.MarketHomeActivity" />
     </application>
 
 </manifest>

@@ -14,4 +14,8 @@
     <string name="sign_up_password">비밀번호</string>
     <string name="sign_up_confirm">회원가입</string>
     <string name="sign_up_need_input_element">모든 항목을 입력해주세요!</string>
+
+    <string name="market_app_bar">사과마켓</string>
+    <string name="market_price_won">%,d원</string>
+
 </resources>

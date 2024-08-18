@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.jess.nbcamp.compose4.market.presentation.home.MarketHomeActivity
 import com.jess.nbcamp.compose4.mvvm.MvvmViewModel
 import com.jess.nbcamp.compose4.state.HoistingActivity
 import com.jess.nbcamp.compose4.state.StatefulActivity
@@ -104,6 +105,19 @@ fun Greeting(
             },
         ) {
             Text(text = "SignInActivity")
+        }
+
+        Button(
+            onClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        MarketHomeActivity::class.java
+                    )
+                )
+            },
+        ) {
+            Text(text = "MarketActivity")
         }
     }
 }
