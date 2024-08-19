@@ -45,14 +45,31 @@ fun MarketHomeScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
+        topBar = {
+            Row(
+                modifier = Modifier
+                    .height(56.dp),
+            ) {
+                Text(
+                    modifier = Modifier
+                        .height(IntrinsicSize.Max)
+                        .padding(start = 16.dp)
+                        .align(Alignment.CenterVertically),
+                    text = stringResource(id = R.string.market_app_bar),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+
+        },
         modifier = modifier
             .fillMaxSize()
             .systemBarsPadding()
-    ) { _ ->
+    ) { innerPadding ->
 
         // 아이템
         LazyColumn(
-            modifier = modifier
+            modifier = Modifier.padding(innerPadding)
         ) {
             itemsIndexed(
                 items = uiState.items,
