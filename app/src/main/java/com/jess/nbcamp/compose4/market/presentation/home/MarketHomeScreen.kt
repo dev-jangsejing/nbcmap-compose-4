@@ -1,6 +1,5 @@
 package com.jess.nbcamp.compose4.market.presentation.home
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -39,6 +38,7 @@ import com.jess.nbcamp.compose4.market.model.MarketSaleItem
 @Composable
 fun MarketHomeScreen(
     viewModel: MarketHomeViewModel,
+    onClick: (MarketSaleItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -77,7 +77,10 @@ fun MarketHomeScreen(
                     item.hashCode()
                 },
             ) { index, item ->
-                SaleItem(item)
+                SaleItem(
+                    item = item,
+                    onClick = onClick,
+                )
 
                 // 구분선
                 if (index < uiState.items.lastIndex) {
@@ -89,26 +92,16 @@ fun MarketHomeScreen(
 }
 
 @Composable
-private fun AppBar(
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-    ) {
-        Text(text = stringResource(id = R.string.market_app_bar))
-    }
-}
-
-@Composable
 private fun SaleItem(
     item: MarketSaleItem,
+    onClick: (MarketSaleItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
             .height(IntrinsicSize.Max)
             .clickable {
-                Log.d("jess", "hi")
+                onClick(item)
             }
             .padding(20.dp)
     ) {

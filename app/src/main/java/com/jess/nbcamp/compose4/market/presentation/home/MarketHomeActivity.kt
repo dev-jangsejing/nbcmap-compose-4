@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import com.jess.nbcamp.compose4.market.presentation.detail.MarketDetailActivity
 import com.jess.nbcamp.compose4.ui.theme.NbCampTheme
 
 class MarketHomeActivity : ComponentActivity() {
@@ -18,6 +19,14 @@ class MarketHomeActivity : ComponentActivity() {
             NbCampTheme {
                 MarketHomeScreen(
                     viewModel = viewModel,
+                    onClick = { item ->
+                        startActivity(
+                            MarketDetailActivity.newIntent(
+                                context = this,
+                                item = item
+                            )
+                        )
+                    }
                 )
             }
         }

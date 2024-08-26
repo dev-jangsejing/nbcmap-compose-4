@@ -30,6 +30,7 @@
         <activity android:name=".user.signup.SignUpActivity" />
         <activity android:name=".user.user.UserActivity" />
         <activity android:name=".market.presentation.home.MarketHomeActivity" />
+        <activity android:name=".market.presentation.detail.MarketDetailActivity" />
     </application>
 
 </manifest>
