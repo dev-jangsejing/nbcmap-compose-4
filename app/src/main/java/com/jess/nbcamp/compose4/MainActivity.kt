@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jess.nbcamp.compose4.market.presentation.home.MarketHomeActivity
 import com.jess.nbcamp.compose4.mvvm.MvvmViewModel
+import com.jess.nbcamp.compose4.stability.StabilityActivity
 import com.jess.nbcamp.compose4.state.HoistingActivity
 import com.jess.nbcamp.compose4.state.StatefulActivity
 import com.jess.nbcamp.compose4.state.StatelessActivity
@@ -118,6 +119,19 @@ fun Greeting(
             },
         ) {
             Text(text = "MarketActivity")
+        }
+
+        Button(
+            onClick = {
+                context.startActivity(
+                    Intent(
+                        context,
+                        StabilityActivity::class.java
+                    )
+                )
+            },
+        ) {
+            Text(text = "StabilityActivity")
         }
     }
 }

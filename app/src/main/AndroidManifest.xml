@@ -31,6 +31,7 @@
         <activity android:name=".user.user.UserActivity" />
         <activity android:name=".market.presentation.home.MarketHomeActivity" />
         <activity android:name=".market.presentation.detail.MarketDetailActivity" />
+        <activity android:name=".stability.StabilityActivity"/>
     </application>
 
 </manifest>
